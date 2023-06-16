@@ -1,0 +1,25 @@
+{
+  "size_x": 2,
+  "size_y": 1,
+  "csv_root_path": "",
+  "DNA_origami": {
+    "staple_tile_v2_TL": {
+      "path": "../sequence_files/staple_tile_TL_v2.csv",
+      "x": 0,
+      "y": 0,
+      "shift": 0
+    },
+    "raw_tile": {
+      "path": "../sequence_files/modified_sequence.csv",
+      "x": 1,
+      "y": 0,
+      "shift": 0
+    }
+  },
+  "colors": {
+    "data_bit": "#00ff10",
+    "other_overhang": "#00fdff",
+    "side_overhang": "#942192",
+    "default_staple": "#000000"
+  }
+}
