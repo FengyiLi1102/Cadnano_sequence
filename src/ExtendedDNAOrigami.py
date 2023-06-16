@@ -8,7 +8,7 @@ from src.DNAOrigami import DNAOrigami
 
 import logging
 
-from test.utils import config_logging
+from src.utils import config_logging
 
 config_logging()  # logging configuration set-up
 logger = logging.getLogger(__name__)
