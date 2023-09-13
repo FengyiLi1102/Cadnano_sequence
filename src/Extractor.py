@@ -26,6 +26,7 @@ class Extractor:
         origami_loc_staples_dict = dict()
         side_color = extended_origami.get_color_setting()["side_overhang"]
         other_color = extended_origami.get_color_setting()["other_overhang"]
+        modified_color = extended_origami.get_color_setting()["modified_staples"]
 
         for origami_pos, origami_chip in extended_origami.get_origami_position().items():
             # Group the dataframe by colors, and find overhangs
@@ -34,9 +35,9 @@ class Extractor:
 
             location_staples = defaultdict(list)  # store locations and associated staples for each origami
 
-            for loc, color in enumerate([other_color, side_color]):
+            for loc, color in enumerate([other_color, side_color, modified_color]):
                 if color in grouped_df.groups.keys():
-                    # origami possibly has overhangs
+                    # origami possibly has overhangs and modified inactive staples
                     color_group = grouped_df.get_group(color)  # staples in this color
                     color_group = Extractor.sort_staples_for_output(color_group, loc)  # Sort the staples for output
                     cls.filter_staple_by_location(color_group, location_staples, extended_origami)
@@ -58,12 +59,12 @@ class Extractor:
 
         # find the end out of the scaffold and use it to sort
         # TODO: two ends both out of the scaffold
-        if side:
+        if side == 1:
             # right or left
             groupby_obj_copy["compare"] = groupby_obj_copy.apply(
                 lambda row: row["Start"] if row["Start_base"] > row["End_base"] else row["End"], axis=1)
         else:
-            # top or bottom
+            # top or bottom or modified staples
             groupby_obj_copy["compare"] = groupby_obj_copy.apply(
                 lambda row: row["Start_base"] if row["Start"] > row["End"] else row["End_base"], axis=1)
 
@@ -73,7 +74,8 @@ class Extractor:
         return groupby_obj_copy
 
     @staticmethod
-    def filter_staple_by_location(group_df: pd.DataFrame, location_staples: Dict[str, List[Staple]],
+    def filter_staple_by_location(group_df: pd.DataFrame,
+                                  location_staples: Dict[str, List[Staple]],
                                   extended_origami: ExtendedDNAOrigami) -> None:
         """
         Classify staples by their locations determined before.
@@ -84,8 +86,11 @@ class Extractor:
         """
         for idx, row in group_df.iterrows():
             staple = Staple(row, extended_origami.get_color_setting())
+            staple_location = staple.get_position()
 
             if staple.is_overhang:
-                location_staples[staple.get_position()].append(staple)
+                location_staples[staple_location].append(staple)
+            elif staple_location == "modified":
+                location_staples["modified"].append(staple)
             else:
                 location_staples["normal"].append(staple)

@@ -55,6 +55,9 @@ class Staple:
                 self.__location = "b"  # bottom
             else:
                 self.__location = "t"
+        elif self.__color == color_setting["modified_staples"]:
+            # modified inactive staples
+            self.__location = "modified"
         else:
             self.__location = "normal"
 

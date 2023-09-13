@@ -1,0 +1,38 @@
+{
+  "size_x": 2,
+  "size_y": 2,
+  "csv_root_path": "sequence_files/design_v2_1/",
+  "DNA_origami": {
+    "staple_tile_v2_TL": {
+      "path": "design_TL_(0,0)_v2_1.csv",
+      "x": 0,
+      "y": 0,
+      "shift": 0
+    },
+    "staple_tile_v2_BL": {
+      "path": "design_BL_(0,-1)_v2_1.csv",
+      "x": 0,
+      "y": -1,
+      "shift": 2
+    },
+    "staple_tile_v2_TR": {
+      "path": "design_TR_(0,1)_v2_1.csv",
+      "x": 1,
+      "y": 0,
+      "shift": 0
+    },
+    "staple_tile_v2_BR": {
+      "path": "design_BR_(1,-1)_v2_1.csv",
+      "x": 1,
+      "y": -1,
+      "shift": 2
+    }
+  },
+  "colors": {
+    "data_bit": "#00f900",
+    "other_overhang": "#00fdff",
+    "side_overhang": "#942192",
+    "default_staple": "#000000",
+    "modified_staples":"#ff0000"
+  }
+}

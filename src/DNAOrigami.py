@@ -11,6 +11,7 @@ class DNAOrigami:
     DNA origami contains associated staples.
     """
     __csv_df: pd.DataFrame = None  # Sequence input csv file
+    csv_df_copy: pd.DataFrame = None  # copy of original csv to store assigned bases
 
     origami_name: str = None
     position: Tuple  # Position of the origami component in the whole design
@@ -19,6 +20,7 @@ class DNAOrigami:
     def __init__(self, name: str, origami_data: Dict, csv_root: str = "") -> None:
         csv_path = os.path.join(csv_root, origami_data["path"])
         self.__csv_df = pd.read_csv(csv_path, delimiter=",")
+        self.csv_df_copy = self.__csv_df.copy()
 
         try:
             assert len(self.__csv_df.columns) == 5  # integrity of the csv file
